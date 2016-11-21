@@ -13,6 +13,7 @@
 #include "resource.h"
 
 TCHAR sel_drive[4] = "";
+TCHAR params[64] = "-d /boot/syslinux -i -m -a ";
 HWND list = NULL;
 
 void SizeToStr( ULARGE_INTEGER& size, LPTSTR size_str )
@@ -183,11 +184,13 @@ int WINAPI WinMain( HINSTANCE hinst, HINSTANCE hprev, LPSTR cmd, int show )
 				return -1;
 			}
 
+			_tcscat(params, sel_drive);
+
 			SHELLEXECUTEINFO si;
 			si.cbSize = sizeof(si);
 			si.lpVerb = _T("open");
 			si.lpFile = exe_path;
-			si.lpParameters = sel_drive;
+			si.lpParameters = params; //sel_drive;
 			si.lpDirectory = NULL;
 			si.nShow = SW_HIDE;
 			si.hwnd = NULL;
